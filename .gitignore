@@ -1,3 +1,6 @@
+# Generated Folders
+.vs/
+
 # Prerequisites
 *.d
 
@@ -16,7 +19,7 @@
 *.dylib
 *.dll
 
-# Fortran module files
+# Fortran Module Files
 *.mod
 *.smod
 
@@ -30,3 +33,23 @@
 *.exe
 *.out
 *.app
+
+# Always Include Premake
+!premake5.exe
+
+# Build Folders
+[Bb]inaries/
+[Ii]ntermediates/
+
+# Project Files
+*.xcodeproj
+*.xcworkspace
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
