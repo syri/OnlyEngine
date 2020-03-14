@@ -8,7 +8,7 @@ class Sandbox : public Engine::Application
 public:
     Sandbox()
     {
-        printf("Only Engine: v%i.%i", ENGINE_VERSION_MAJOR, ENGINE_VERSION_MINOR);
+        printf("Engine: v%i.%i", ENGINE_VERSION_MAJOR, ENGINE_VERSION_MINOR);
     }
 
     ~Sandbox() {}

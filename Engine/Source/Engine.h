@@ -2,10 +2,16 @@
 //
 #pragma once
 
-
+// External
 #include <stdio.h>
 
+// Internal
 #include "EngineVersion.h"
+#include "API.h"
 
+// Engine Core
 #include "Core/Application.h"
-#include "Core/EntryPoint.h"
+
+
+// Engine Entry Point
+#include "EntryPoint.h"
