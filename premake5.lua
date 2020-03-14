@@ -1,4 +1,4 @@
--- Written with ❤️ by Syri.
+-- Written by Syri.
 --
 workspace "OnlyEngine"
     architecture "x64"

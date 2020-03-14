@@ -1,3 +1,5 @@
+:: Written by Syri.
+::
 @echo off
 
 cls
