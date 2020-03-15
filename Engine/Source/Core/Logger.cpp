@@ -13,7 +13,7 @@ namespace Engine
 	Logger::~Logger()
 	{}
 
-	std::string Logger::Print(LogType MessageType, std::string Message, bool ForceNewline)
+	std::string Logger::Print(LogType MessageType, std::string Message, bool ForceEndline)
 	{
 		// Output message type.
 		SetConsoleTextAttribute(m_ConsoleHandle, (WORD)MessageType);
@@ -25,7 +25,7 @@ namespace Engine
 		SetConsoleTextAttribute(m_ConsoleHandle, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 		std::cout << Message;
 		
-		if (ForceNewline) std::cout << std::endl;
+		if (ForceEndline) std::cout << std::endl;
 
 		return Message;
 	}

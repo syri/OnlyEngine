@@ -22,7 +22,7 @@ namespace Engine
 		Logger();
 		~Logger();
 
-		std::string Print(LogType MessageType, std::string Message, bool ForceNewline = false);
+		std::string Print(LogType MessageType, std::string Message, bool ForceEndline = false);
 		void Clear();
 	};
 }
