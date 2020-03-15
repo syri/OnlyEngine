@@ -11,16 +11,17 @@ namespace Engine
     class ENGINE_API Application
     {
     public:
-        std::string m_ApplicationName;
-
+        LPCWSTR m_ApplicationName;
 		Window* m_Window;
 		Logger* m_Logger;
+
+        
 
     private:
         bool m_Running;
 
     public:
-        Application(std::string ApplicationName, int Width, int Height, bool Fullscreen);
+        Application(LPCWSTR ApplicationName, int Width, int Height, bool Fullscreen);
         virtual ~Application();
 
         void Run();

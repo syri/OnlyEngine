@@ -5,12 +5,11 @@
 
 namespace Engine
 {
-    Application::Application(std::string ApplicationName, int Width, int Height, bool Fullscreen)
+    Application::Application(LPCWSTR ApplicationName, int Width, int Height, bool Fullscreen)
         : m_ApplicationName(ApplicationName), m_Running(true)
     {
         m_Logger = new Logger();
-        m_Window = new Window((LPCWSTR)m_ApplicationName.c_str(), Width, Height, Fullscreen);
-        //m_Window->m_Application = this;
+        m_Window = new Window(m_ApplicationName, Width, Height, Fullscreen);
     }
 
     Application::~Application()
