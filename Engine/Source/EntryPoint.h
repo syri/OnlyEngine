@@ -8,7 +8,7 @@
 
     int main(int argc, char** argv)
     {
-        auto application = Engine::CreateApplication();
+        Engine::Application* application = Engine::CreateApplication();
         application->Run();
         delete application;
     }

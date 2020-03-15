@@ -15,6 +15,8 @@ project "Engine"
         "%{prj.name}/Source/**.cpp"
     }
 
+    includedirs { "Vendor/fmt/include" }
+
     filter "architecture:x64"
       targetdir ("Binaries/Win64/%{prj.name}/%{cfg.buildcfg}")
       objdir ("Intermediates/Win64/%{prj.name}/%{cfg.buildcfg}")
@@ -28,6 +30,7 @@ project "Engine"
     
     filter "configurations:Development"
         defines { "DEBUG", "TRACE", "ENGINE_DEBUG" }
+        buildoptions "/MDd"
         symbols "ON"
     
     filter "configurations:Release"
@@ -49,7 +52,11 @@ project "Sandbox"
         "%{prj.name}/Source/**.cpp"
     }
 
-    includedirs { "Engine/Source" }
+    includedirs
+    {
+      "Engine/Source",
+      "Vendor/fmt/include"
+    }
 
     links { "Engine" }
 

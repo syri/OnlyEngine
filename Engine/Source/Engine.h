@@ -1,17 +1,11 @@
 // Written by Syri.
 //
 #pragma once
-
 // External
-#include <stdio.h>
+#include <iostream>
+#include <string.h>
+#include <windows.h>
 
 // Internal
 #include "EngineVersion.h"
 #include "API.h"
-
-// Engine Core
-#include "Core/Application.h"
-
-
-// Engine Entry Point
-#include "EntryPoint.h"
