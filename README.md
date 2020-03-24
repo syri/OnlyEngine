@@ -1,4 +1,4 @@
-# The Only Engine
+# Prae
 ;)
 
-A very very part time DX12 game engine project.
+A very very part time graphics engine project.
