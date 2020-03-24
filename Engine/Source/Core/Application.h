@@ -8,7 +8,7 @@
 
 namespace Engine
 {
-    class ENGINE_API Application
+    class PRAE_API Application
     {
     public:
         LPCWSTR m_ApplicationName;

@@ -1,13 +1,14 @@
 -- Written by Syri.
 --
-workspace "OnlyEngine"
+workspace "Prae"
     architecture "x64"
     configurations { "Development", "Release", "Shipping" }
 
 project "Engine"
-    location "Engine"
+    location "Intermediates/ProjectFiles"
     kind "SharedLib"
     language "C++"
+    targetname "Prae"
 
     files
     {
@@ -26,23 +27,23 @@ project "Engine"
         staticruntime "On"
         systemversion "latest"
 
-        defines { "ENGINE_PLATFORM_WINDOWS", "ENGINE_BUILD_DLL" }
+        defines { "PRAE_PLATFORM_WINDOWS", "PRAE_BUILD_DLL" }
     
     filter "configurations:Development"
-        defines { "DEBUG", "TRACE", "ENGINE_DEBUG" }
+        defines { "DEBUG", "TRACE", "PRAE_DEBUG" }
         buildoptions "/MDd"
         symbols "ON"
     
     filter "configurations:Release"
-        defines { "ENGINE_RELEASE" }
+        defines { "PRAE_RELEASE" }
         optimize "On"
 
     filter "configurations:Shipping"
-        defines { "ENGINE_SHIPPING" }
+        defines { "PRAE_SHIPPING" }
         optimize "On"
 
-project "Sandbox"
-    location "Sandbox"
+project "Game"
+    location "Intermediates/ProjectFiles"
     kind "ConsoleApp"
     language "C++"
 
@@ -54,8 +55,8 @@ project "Sandbox"
 
     includedirs
     {
-      "Engine/Source",
-      "Vendor/fmt/include"
+        "Engine/Source",
+        "Vendor/fmt/include"
     }
 
     links { "Engine" }
@@ -68,18 +69,18 @@ project "Sandbox"
         cppdialect "C++17"
         systemversion "latest"
 
-        defines { "ENGINE_PLATFORM_WINDOWS" }
+        defines { "PRAE_PLATFORM_WINDOWS" }
 
-        postbuildcommands { "{COPY} ../Binaries/Win64/Engine/%{cfg.buildcfg}/Engine.dll ../Binaries/Win64/Sandbox/%{cfg.buildcfg}/" }
+        postbuildcommands { "{COPY} ../../Binaries/Win64/Engine/%{cfg.buildcfg}/Prae.dll ../../Binaries/Win64/%{prj.name}/%{cfg.buildcfg}/" }
 
     filter "configurations:Development"
-        defines { "DEBUG", "TRACE", "ENGINE_DEBUG" }
+        defines { "DEBUG", "TRACE", "PRAE_DEBUG" }
         symbols "ON"
 
     filter "configurations:Release"
-        defines { "ENGINE_RELEASE" }
+        defines { "PRAE_RELEASE" }
         optimize "On"
 
     filter "configurations:Shipping"
-        defines { "ENGINE_SHIPPING" }
+        defines { "PRAE_SHIPPING" }
         optimize "On"

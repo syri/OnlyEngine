@@ -6,7 +6,7 @@
 
 namespace Engine
 {
-	class Window
+	class PRAE_API Window
 	{
 	public:
 		int m_X;

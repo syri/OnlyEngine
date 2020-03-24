@@ -6,4 +6,4 @@
 #include <fmt/format.h>
 
 // Internal
-#include "SandboxVersion.h"
+#include "GameVersion.h"

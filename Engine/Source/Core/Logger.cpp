@@ -32,7 +32,7 @@ namespace Engine
 
 	void Logger::Clear()
 	{
-#ifdef ENGINE_PLATFORM_WINDOWS
+#ifdef PRAE_PLATFORM_WINDOWS
 		system("CLS");
 #endif
 	}

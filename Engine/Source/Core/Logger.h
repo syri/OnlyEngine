@@ -13,7 +13,7 @@ namespace Engine
 		Error = FOREGROUND_RED
 	};
 
-	class ENGINE_API Logger
+	class PRAE_API Logger
 	{
 	private:
 		HANDLE m_ConsoleHandle = NULL;
