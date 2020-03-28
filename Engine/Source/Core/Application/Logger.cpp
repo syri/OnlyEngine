@@ -16,11 +16,11 @@ namespace Engine
 
 		// Output message type.
 		if (MessageType == LogType::Info) fmt::print(fmt::fg(fmt::color::deep_sky_blue), "[INFO] ");
-		if (MessageType == LogType::Warning) fmt::print(fmt::fg(fmt::color::yellow), "[WARNING] ");
-		if (MessageType == LogType::Error) fmt::print(fmt::fg(fmt::color::red), "[ERROR] ");
+		else if (MessageType == LogType::Warning) fmt::print(fmt::fg(fmt::color::yellow), "[WARNING] ");
+		else if (MessageType == LogType::Error) fmt::print(fmt::fg(fmt::color::red), "[ERROR] ");
 
-		if (MessageType == LogType::Success) fmt::print(fmt::fg(fmt::color::lime_green), "[SUCCESS] ");
-		if (MessageType == LogType::Failure) fmt::print(fmt::fg(fmt::color::red), "[FAILURE] ");
+		else if (MessageType == LogType::Success) fmt::print(fmt::fg(fmt::color::lime_green), "[SUCCESS] ");
+		else if (MessageType == LogType::Failure) fmt::print(fmt::fg(fmt::color::red), "[FAILURE] ");
 
 		// Output message.
 		fmt::print(fmt::fg(fmt::color::white), Message);
