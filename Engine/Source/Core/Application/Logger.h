@@ -19,6 +19,7 @@ namespace Engine
 	class PRAE_API Logger
 	{
 	public:
+		static void Setup();
 		static std::string Print(LogType MessageType, std::string Message, bool ForceEndline = false);
 		static void Clear();
 	};
