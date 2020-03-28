@@ -1,7 +1,7 @@
-// Written by Syri.
+// Written by syri.
 //
 #pragma once
-#include "../Engine.h"
+#include "../../Engine.h"
 
 
 namespace Engine

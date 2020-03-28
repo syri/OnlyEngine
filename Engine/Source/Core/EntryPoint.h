@@ -1,4 +1,4 @@
-// Written by Syri.
+// Written by syri.
 //
 #pragma once
 

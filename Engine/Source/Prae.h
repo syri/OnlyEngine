@@ -1,15 +1,15 @@
-// Written by Syri.
+// Written by syri.
 //
 #pragma once
 // Engine
 #include "Engine.h"
 
 // Engine Core
-#include "Core/Application.h"
-#include "Core/Logger.h"
+#include "Core/Application/Application.h"
+#include "Core/Application/Logger.h"
 
 
 //
 // Application Entry Point
 //
-#include "EntryPoint.h"
+#include "Core/EntryPoint.h"

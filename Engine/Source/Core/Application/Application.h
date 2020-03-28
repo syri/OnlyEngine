@@ -1,7 +1,7 @@
-// Written by Syri.
+// Written by syri.
 //
 #pragma once
-#include "../Engine.h"
+#include "../../Engine.h"
 #include "Logger.h"
 #include "Window.h"
 
@@ -13,9 +13,6 @@ namespace Engine
     public:
         LPCWSTR m_ApplicationName;
 		Window* m_Window;
-		Logger* m_Logger;
-
-        
 
     private:
         bool m_Running;

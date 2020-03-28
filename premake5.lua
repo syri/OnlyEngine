@@ -24,14 +24,13 @@ project "Engine"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
+        staticruntime "Off"
         systemversion "latest"
 
         defines { "PRAE_PLATFORM_WINDOWS", "PRAE_BUILD_DLL" }
     
     filter "configurations:Development"
         defines { "DEBUG", "TRACE", "PRAE_DEBUG" }
-        buildoptions "/MDd"
         symbols "ON"
     
     filter "configurations:Release"
@@ -75,12 +74,15 @@ project "Game"
 
     filter "configurations:Development"
         defines { "DEBUG", "TRACE", "PRAE_DEBUG" }
+        buildoptions "/MDd"
         symbols "ON"
 
     filter "configurations:Release"
         defines { "PRAE_RELEASE" }
+        buildoptions "/MD"
         optimize "On"
 
     filter "configurations:Shipping"
         defines { "PRAE_SHIPPING" }
+        buildoptions "/MD"
         optimize "On"
