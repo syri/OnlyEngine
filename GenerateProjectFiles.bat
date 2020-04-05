@@ -9,7 +9,7 @@ IF NOT DEFINED devEnvironment (SET devEnvironment=vs2019)
 
 cls
 echo Generating Project files for %devEnvironment%
-start Vendor/Premake/premake5.exe %devEnvironment%
+call %~dp0Vendor/Premake/premake5.exe %devEnvironment%
 echo Done.
 
 pause

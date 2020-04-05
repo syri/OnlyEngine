@@ -8,7 +8,7 @@ namespace Engine
 {
 	enum class LogType : unsigned int
 	{
-		Info,
+		Info = 1,
 		Warning,
 		Error,
 
@@ -20,7 +20,7 @@ namespace Engine
 	{
 	public:
 		static void Setup();
-		static std::string Print(LogType MessageType, std::string Message, bool ForceEndline = false);
+		static std::string Print(LogType InLogType, std::string Message, bool ForceEndline = false);
 		static void Clear();
 	};
 }

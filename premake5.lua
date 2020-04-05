@@ -10,13 +10,21 @@ project "Engine"
     language "C++"
     targetname "Prae"
 
-    files
-    {
+    files {
         "%{prj.name}/Source/**.h",
         "%{prj.name}/Source/**.cpp"
     }
 
-    includedirs { "Vendor/fmt/include" }
+    includedirs {
+        "Vendor/fmt/include",
+        "Vendor/D3DX12"
+    }
+
+    links {
+        "d3d12.lib",
+        "dxgi.lib",
+        "d3dcompiler.lib"
+    }
 
     filter "architecture:x64"
       targetdir ("Binaries/Win64/%{prj.name}/%{cfg.buildcfg}")
@@ -46,23 +54,22 @@ project "Game"
     kind "ConsoleApp"
     language "C++"
 
-    files
-    {
+    files {
         "%{prj.name}/Source/**.h",
         "%{prj.name}/Source/**.cpp"
     }
 
-    includedirs
-    {
+    includedirs {
         "Engine/Source",
-        "Vendor/fmt/include"
+        "Vendor/fmt/include",
+        "Vendor/D3DX12"
     }
 
     links { "Engine" }
 
     filter "architecture:x64"
-      targetdir ("Binaries/Win64/%{prj.name}/%{cfg.buildcfg}")
-      objdir ("Intermediates/Win64/%{prj.name}/%{cfg.buildcfg}")
+        targetdir ("Binaries/Win64/%{prj.name}/%{cfg.buildcfg}")
+        objdir ("Intermediates/Win64/%{prj.name}/%{cfg.buildcfg}")
 
     filter "system:windows"
         cppdialect "C++17"

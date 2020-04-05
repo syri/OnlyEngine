@@ -5,23 +5,33 @@
 
 namespace Engine
 {
-    Application::Application(LPCWSTR ApplicationName, int Width, int Height, bool Fullscreen)
+	Application::Application(std::wstring ApplicationName)
         : m_ApplicationName(ApplicationName), m_Running(true)
-    {
-        m_Window = new Window(m_ApplicationName, Width, Height, Fullscreen);
-    }
+    {}
 
     Application::~Application()
     {
-        m_Window = NULL;
-        delete m_Window;
+        for (Window* WindowReference : m_Window)
+        {
+            WindowReference = 0;
+            delete WindowReference;
+        }
     }
 
     void Application::Run()
     {
         while (m_Running)
         {
-            if (!m_Window->Frame()) m_Running = false;
+			for (Window* WindowReference : m_Window)
+			{
+				if (!WindowReference->Update()) m_Running = false;
+				else WindowReference->Render();
+			}
         }
     }
+
+	void Application::CreateNewWindow(WindowDescriptor* InWindowDescriptor)
+	{
+        m_Window.push_back(new Window(InWindowDescriptor));
+	}
 }

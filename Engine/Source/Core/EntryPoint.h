@@ -8,8 +8,8 @@
 
     int main(int argc, char** argv)
     {
-        Engine::Application* application = Engine::CreateApplication();
-        application->Run();
-        delete application;
+        Engine::Application* Application = Engine::CreateApplication();
+        Application->Run();
+        delete Application;
     }
 #endif

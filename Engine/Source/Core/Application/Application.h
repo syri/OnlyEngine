@@ -11,17 +11,18 @@ namespace Engine
     class PRAE_API Application
     {
     public:
-        LPCWSTR m_ApplicationName;
-		Window* m_Window;
+        std::wstring m_ApplicationName;
+        std::vector<Window*> m_Window;
 
     private:
         bool m_Running;
 
     public:
-        Application(LPCWSTR ApplicationName, int Width, int Height, bool Fullscreen);
+        Application(std::wstring ApplicationName);
         virtual ~Application();
 
         void Run();
+        void CreateNewWindow(WindowDescriptor* InWindowDescriptor);
     };
 
     Application* CreateApplication();

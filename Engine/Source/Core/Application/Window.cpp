@@ -5,8 +5,8 @@
 
 namespace Engine
 {
-	Window::Window(LPCWSTR WindowTitle, int& Width, int& Height, bool Fullscreen)
-		: m_WindowTitle(WindowTitle), m_Width(Width), m_Height(Height), m_Fullscreen(Fullscreen), m_X(0), m_Y(0)
+	Window::Window(WindowDescriptor* InWindowDescriptor)
+		: m_WindowDescriptor(InWindowDescriptor)
 	{
 		WNDCLASSEX WindowClass;
 		DEVMODE ScreenSettings;
@@ -25,55 +25,62 @@ namespace Engine
 		WindowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 		WindowClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 		WindowClass.lpszMenuName = NULL;
-		WindowClass.lpszClassName = m_WindowTitle;
+		WindowClass.lpszClassName = m_WindowDescriptor->WindowTitle.c_str();
 		WindowClass.cbSize = sizeof(WNDCLASSEX);
 		RegisterClassEx(&WindowClass);
 
-		if (m_Fullscreen)
+		if (m_WindowDescriptor->Fullscreen)
 		{
 			// Handle full screen display settings and window creation.
-			m_Width = GetSystemMetrics(SM_CXSCREEN);
-			m_Height = GetSystemMetrics(SM_CYSCREEN);
+			m_WindowDescriptor->Width = GetSystemMetrics(SM_CXSCREEN);
+			m_WindowDescriptor->Height = GetSystemMetrics(SM_CYSCREEN);
 
 			memset(&ScreenSettings, 0, sizeof(ScreenSettings));
 			ScreenSettings.dmSize = sizeof(ScreenSettings);
-			ScreenSettings.dmPelsWidth = (unsigned long)m_Width;
-			ScreenSettings.dmPelsHeight = (unsigned long)m_Height;
+			ScreenSettings.dmPelsWidth = m_WindowDescriptor->Width;
+			ScreenSettings.dmPelsHeight = m_WindowDescriptor->Height;
 			ScreenSettings.dmBitsPerPel = 32;
 			ScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
 
 			ChangeDisplaySettings(&ScreenSettings, CDS_FULLSCREEN);
 
-			m_WindowHandle = CreateWindowEx(WS_EX_APPWINDOW, m_WindowTitle, m_WindowTitle, WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_POPUP,
-				m_X, m_Y, m_Width, m_Height, NULL, NULL, m_InstanceHandle, NULL);
+			m_WindowDescriptor->WindowHandle = CreateWindowEx(WS_EX_APPWINDOW, m_WindowDescriptor->WindowTitle.c_str(), m_WindowDescriptor->WindowTitle.c_str(), WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_POPUP,
+				m_WindowDescriptor->X, m_WindowDescriptor->Y, m_WindowDescriptor->Width, m_WindowDescriptor->Height, 0, 0, m_InstanceHandle, 0);
 		}
 		else
 		{
 			// Normal window creation.
-			m_X = (GetSystemMetrics(SM_CXSCREEN) - m_Width) / 2;
-			m_Y = (GetSystemMetrics(SM_CYSCREEN) - m_Height) / 2;
+			m_WindowDescriptor->X = (GetSystemMetrics(SM_CXSCREEN) - m_WindowDescriptor->Width) / 2;
+			m_WindowDescriptor->Y = (GetSystemMetrics(SM_CYSCREEN) - m_WindowDescriptor->Height) / 2;
 
-			m_WindowHandle = CreateWindowEx(WS_EX_APPWINDOW, m_WindowTitle, m_WindowTitle, WS_OVERLAPPEDWINDOW,
-				m_X, m_Y, m_Width, m_Height, NULL, NULL, m_InstanceHandle, NULL);
+			m_WindowDescriptor->WindowHandle = CreateWindowEx(WS_EX_APPWINDOW, m_WindowDescriptor->WindowTitle.c_str(), m_WindowDescriptor->WindowTitle.c_str(), WS_OVERLAPPEDWINDOW,
+				m_WindowDescriptor->X, m_WindowDescriptor->Y, m_WindowDescriptor->Width, m_WindowDescriptor->Height, 0, 0, m_InstanceHandle, 0);
 		}
 
-		ShowWindow(m_WindowHandle, SW_SHOW);
-		SetForegroundWindow(m_WindowHandle);
-		SetFocus(m_WindowHandle);
+		ShowWindow(m_WindowDescriptor->WindowHandle, SW_SHOW);
+		SetForegroundWindow(m_WindowDescriptor->WindowHandle);
+
+		m_Renderer = new D3D12(m_WindowDescriptor);
+
+		m_Renderer->Initialise();
 	}
 
 	Window::~Window()
 	{
-		if (m_Fullscreen) ChangeDisplaySettings(NULL, 0);
+		if (m_WindowDescriptor->Fullscreen) ChangeDisplaySettings(NULL, 0);
 
-		DestroyWindow(m_WindowHandle);
-		m_WindowHandle = NULL;
+		DestroyWindow(m_WindowDescriptor->WindowHandle);
+		m_WindowDescriptor->WindowHandle = NULL;
 
-		UnregisterClass(m_WindowTitle, m_InstanceHandle);
+		UnregisterClass(m_WindowDescriptor->WindowTitle.c_str(), m_InstanceHandle);
 		m_InstanceHandle = NULL;
+
+		m_Renderer->Destroy();
+		m_Renderer = 0;
+		delete m_Renderer;
 	}
 
-	bool Window::Frame()
+	bool Window::Update()
 	{
 		// Handle and dispatch messages.
 		if (PeekMessage(&m_Message, NULL, 0, 0, PM_REMOVE))
@@ -85,6 +92,12 @@ namespace Engine
 		if (m_Message.message == WM_QUIT) return false;
 
 		return true;
+	}
+
+	void Window::Render()
+	{
+		m_Renderer->Update();
+		m_Renderer->Render();
 	}
 
 	LRESULT CALLBACK Window::MessageHandler(HWND WindowHandle, UINT Message, WPARAM WParam, LPARAM LParam)
