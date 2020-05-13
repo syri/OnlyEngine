@@ -3,7 +3,7 @@
 @echo off
 
 cls
-echo Enter Development Environment to Generate Project Files For. (Default vs2019)
+echo Enter Development Environment to Generate Project Files for Praesegmen. (Default vs2019)
 set /p devEnvironment=: 
 IF NOT DEFINED devEnvironment (SET devEnvironment=vs2019)
 

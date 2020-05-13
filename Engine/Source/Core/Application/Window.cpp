@@ -5,8 +5,8 @@
 
 namespace Engine
 {
-	Window::Window(WindowDescriptor* InWindowDescriptor)
-		: m_WindowDescriptor(InWindowDescriptor)
+	Window::Window(WindowDescriptor* InWindowDescriptor, RendererType InRendererType)
+		: m_WindowDescriptor(InWindowDescriptor), m_RendererType(InRendererType)
 	{
 		WNDCLASSEX WindowClass;
 		DEVMODE ScreenSettings;
@@ -44,8 +44,9 @@ namespace Engine
 
 			ChangeDisplaySettings(&ScreenSettings, CDS_FULLSCREEN);
 
-			m_WindowDescriptor->WindowHandle = CreateWindowEx(WS_EX_APPWINDOW, m_WindowDescriptor->WindowTitle.c_str(), m_WindowDescriptor->WindowTitle.c_str(), WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_POPUP,
-				m_WindowDescriptor->X, m_WindowDescriptor->Y, m_WindowDescriptor->Width, m_WindowDescriptor->Height, 0, 0, m_InstanceHandle, 0);
+			m_WindowDescriptor->WindowHandle = CreateWindowEx(WS_EX_APPWINDOW, m_WindowDescriptor->WindowTitle.c_str(), m_WindowDescriptor->WindowTitle.c_str(),
+				WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_POPUP, m_WindowDescriptor->X, m_WindowDescriptor->Y,
+				m_WindowDescriptor->Width, m_WindowDescriptor->Height, 0, 0, m_InstanceHandle, 0);
 		}
 		else
 		{
@@ -53,16 +54,16 @@ namespace Engine
 			m_WindowDescriptor->X = (GetSystemMetrics(SM_CXSCREEN) - m_WindowDescriptor->Width) / 2;
 			m_WindowDescriptor->Y = (GetSystemMetrics(SM_CYSCREEN) - m_WindowDescriptor->Height) / 2;
 
-			m_WindowDescriptor->WindowHandle = CreateWindowEx(WS_EX_APPWINDOW, m_WindowDescriptor->WindowTitle.c_str(), m_WindowDescriptor->WindowTitle.c_str(), WS_OVERLAPPEDWINDOW,
-				m_WindowDescriptor->X, m_WindowDescriptor->Y, m_WindowDescriptor->Width, m_WindowDescriptor->Height, 0, 0, m_InstanceHandle, 0);
+			m_WindowDescriptor->WindowHandle = CreateWindowEx(WS_EX_APPWINDOW, m_WindowDescriptor->WindowTitle.c_str(), m_WindowDescriptor->WindowTitle.c_str(),
+				WS_OVERLAPPEDWINDOW, m_WindowDescriptor->X, m_WindowDescriptor->Y, m_WindowDescriptor->Width, m_WindowDescriptor->Height, 0, 0, m_InstanceHandle, 0);
 		}
 
 		ShowWindow(m_WindowDescriptor->WindowHandle, SW_SHOW);
 		SetForegroundWindow(m_WindowDescriptor->WindowHandle);
 
-		m_Renderer = new D3D12(m_WindowDescriptor);
+		if (m_RendererType == RendererType::D3D12) m_Renderer = new D3D12Renderer(m_WindowDescriptor);
 
-		m_Renderer->Initialise();
+		if (m_Renderer) m_Renderer->Initialise();
 	}
 
 	Window::~Window()

@@ -16,11 +16,12 @@ namespace Engine
 		Failure
 	};
 
-	class PRAE_API Logger
+	class PRAESEGMEN_API Logger
 	{
 	public:
 		static void Setup();
 		static std::string Print(LogType InLogType, std::string Message, bool ForceEndline = false);
 		static void Clear();
+
 	};
 }

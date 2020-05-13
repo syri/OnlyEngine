@@ -1,6 +1,6 @@
 -- Written by Syri.
 --
-workspace "Prae"
+workspace "Praesegmen"
     architecture "x64"
     configurations { "Development", "Release", "Shipping" }
 
@@ -8,7 +8,7 @@ project "Engine"
     location "Intermediates/ProjectFiles"
     kind "SharedLib"
     language "C++"
-    targetname "Prae"
+    targetname "Praesegmen"
 
     files {
         "%{prj.name}/Source/**.h",
@@ -35,18 +35,18 @@ project "Engine"
         staticruntime "Off"
         systemversion "latest"
 
-        defines { "PRAE_PLATFORM_WINDOWS", "PRAE_BUILD_DLL" }
+        defines { "PRAESEGMEN_PLATFORM_WINDOWS", "PRAESEGMEN_BUILD_DLL" }
     
     filter "configurations:Development"
-        defines { "DEBUG", "TRACE", "PRAE_DEBUG" }
+        defines { "DEBUG", "TRACE", "PRAESEGMEN_DEBUG" }
         symbols "ON"
     
     filter "configurations:Release"
-        defines { "PRAE_RELEASE" }
+        defines { "PRAESEGMEN_RELEASE" }
         optimize "On"
 
     filter "configurations:Shipping"
-        defines { "PRAE_SHIPPING" }
+        defines { "PRAESEGMEN_SHIPPING" }
         optimize "On"
 
 project "Game"
@@ -75,21 +75,24 @@ project "Game"
         cppdialect "C++17"
         systemversion "latest"
 
-        defines { "PRAE_PLATFORM_WINDOWS" }
+        defines { "PRAESEGMEN_PLATFORM_WINDOWS" }
 
-        postbuildcommands { "{COPY} ../../Binaries/Win64/Engine/%{cfg.buildcfg}/Prae.dll ../../Binaries/Win64/%{prj.name}/%{cfg.buildcfg}/" }
+        postbuildcommands {
+          "IF EXIST ..\\..\\Binaries\\Win64\\$(ProjectName)\\Development\\Praesegmen.dll (del ..\\..\\Binaries\\Win64\\$(ProjectName)\\Development\\Praesegmen.dll)",
+          "{COPY} ../../Binaries/Win64/Engine/%{cfg.buildcfg}/Praesegmen.dll ../../Binaries/Win64/%{prj.name}/%{cfg.buildcfg}/"
+        }
 
     filter "configurations:Development"
-        defines { "DEBUG", "TRACE", "PRAE_DEBUG" }
+        defines { "DEBUG", "TRACE", "PRAESEGMEN_DEBUG" }
         buildoptions "/MDd"
         symbols "ON"
 
     filter "configurations:Release"
-        defines { "PRAE_RELEASE" }
+        defines { "PRAESEGMEN_RELEASE" }
         buildoptions "/MD"
         optimize "On"
 
     filter "configurations:Shipping"
-        defines { "PRAE_SHIPPING" }
+        defines { "PRAESEGMEN_SHIPPING" }
         buildoptions "/MD"
         optimize "On"

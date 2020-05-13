@@ -30,8 +30,10 @@ namespace Engine
         }
     }
 
-	void Application::CreateNewWindow(WindowDescriptor* InWindowDescriptor)
+	void Application::CreateNewWindow(WindowDescriptor* InWindowDescriptor, RendererType InRendererType)
 	{
-        m_Window.push_back(new Window(InWindowDescriptor));
+        Window* NewWindow = new Window(InWindowDescriptor, InRendererType);
+
+        m_Window.push_back(NewWindow);
 	}
 }

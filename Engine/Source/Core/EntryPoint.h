@@ -3,7 +3,7 @@
 #pragma once
 
 
-#ifdef PRAE_PLATFORM_WINDOWS
+#ifdef PRAESEGMEN_PLATFORM_WINDOWS
     extern Engine::Application* Engine::CreateApplication();
 
     int main(int argc, char** argv)

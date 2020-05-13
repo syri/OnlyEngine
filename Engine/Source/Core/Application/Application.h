@@ -2,13 +2,13 @@
 //
 #pragma once
 #include "../../Engine.h"
-#include "Logger.h"
+#include "WindowData.h"
 #include "Window.h"
 
 
 namespace Engine
 {
-    class PRAE_API Application
+    class PRAESEGMEN_API Application
     {
     public:
         std::wstring m_ApplicationName;
@@ -22,7 +22,8 @@ namespace Engine
         virtual ~Application();
 
         void Run();
-        void CreateNewWindow(WindowDescriptor* InWindowDescriptor);
+        void CreateNewWindow(WindowDescriptor* InWindowDescriptor, RendererType InRendererType);
+
     };
 
     Application* CreateApplication();

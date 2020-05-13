@@ -1,20 +1,19 @@
 // Written by syri.
 //
 #pragma once
-#include "../../Engine.h"
-#include "../Application/Logger.h"
-#include "../Application/WindowData.h"
+#include "../../../Engine.h"
+#include "../../Application/WindowData.h"
+#include "../D3D12Util.h"
+#include "../IRenderer.h"
 
 
 using Microsoft::WRL::ComPtr;
 
 namespace Engine
 {
-	class PRAE_API D3D12
+	class PRAESEGMEN_API D3D12Renderer : public IRenderer
 	{
 	private:
-		WindowDescriptor* m_WindowDescriptor;
-
 		static const unsigned int m_FrameCount = 2;
 		unsigned int m_renderTargetViewDescriptorSize;
 		unsigned int m_FrameIndex;
@@ -33,7 +32,7 @@ namespace Engine
 		ComPtr<ID3D12Fence> m_Fence;
 
 	public:
-		D3D12(WindowDescriptor* InWindowDescriptor);
+		D3D12Renderer(WindowDescriptor* InWindowDescriptor);
 
 		void Initialise();
 		void Update();

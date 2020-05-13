@@ -20,8 +20,8 @@
 #include <dxgi1_4.h>
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
-#include <d3dx12.h>
 
 // Internal
-#include "EngineDefinitions.h"
 #include "Core/API.h"
+#include "EngineDefinitions.h"
+#include "Core/Profiling/Logger.h"

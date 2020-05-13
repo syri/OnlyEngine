@@ -3,11 +3,11 @@
 #pragma once
 
 
-#ifdef PRAE_PLATFORM_WINDOWS
-	#ifdef PRAE_BUILD_DLL
-		#define PRAE_API __declspec(dllexport)
+#ifdef PRAESEGMEN_PLATFORM_WINDOWS
+	#ifdef PRAESEGMEN_BUILD_DLL
+		#define PRAESEGMEN_API __declspec(dllexport)
 	#else
-		#define PRAE_API __declspec(dllimport)
+		#define PRAESEGMEN_API __declspec(dllimport)
 	#endif
 #else
 	#error "Unsupported Platform Found!"

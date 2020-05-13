@@ -1,22 +1,22 @@
 // Written by syri.
 //
-#include "D3D12.h"
+#include "D3D12Renderer.h"
 
 
 namespace Engine
 {
-	D3D12::D3D12(WindowDescriptor* InWindowDescriptor)
-		: m_WindowDescriptor(InWindowDescriptor), m_FrameIndex(0), m_renderTargetViewDescriptorSize(0),
+	D3D12Renderer::D3D12Renderer(WindowDescriptor* InWindowDescriptor)
+		: IRenderer(InWindowDescriptor), m_FrameIndex(0), m_renderTargetViewDescriptorSize(0),
 		m_UseWarpDevice(false), m_FenceEvent(0), m_FenceValue(0)
 	{}
 
-	void D3D12::Initialise()
+	void D3D12Renderer::Initialise()
 	{
 		LoadPipeline();
 		LoadAssets();
 	}
 
-	void D3D12::LoadPipeline()
+	void D3D12Renderer::LoadPipeline()
 	{
 		unsigned int DXGIFactoryFlags = 0;
 
@@ -106,7 +106,7 @@ namespace Engine
 		}
 		m_renderTargetViewDescriptorSize = m_Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-		CD3DX12_CPU_DESCRIPTOR_HANDLE RenderTargetViewHandle(m_RenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart());
+		UD3D12_CPU_DESCRIPTOR_HANDLE RenderTargetViewHandle(m_RenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart());
 		for (unsigned int BufferIndex = 0; BufferIndex < m_FrameCount; BufferIndex++)
 		{
 			if (FAILED(m_SwapChain->GetBuffer(BufferIndex, IID_PPV_ARGS(&m_renderTargets[BufferIndex]))))
@@ -124,7 +124,7 @@ namespace Engine
 		}
 	}
 
-	void D3D12::LoadAssets()
+	void D3D12Renderer::LoadAssets()
 	{
 		if (FAILED(m_Device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_CommandAllocator.Get(), nullptr, IID_PPV_ARGS(&m_CommandList))))
 		{
@@ -147,17 +147,17 @@ namespace Engine
 		{
 			if (FAILED(HRESULT_FROM_WIN32(GetLastError())))
 			{
-				Logger::Print(LogType::Error, "Error was thrown by the D3D12 Fence.", true);
+				Logger::Print(LogType::Error, "Error was thrown by the D3D12Renderer Fence.", true);
 			}
 		}
 	}
 
-	void D3D12::Update()
+	void D3D12Renderer::Update()
 	{
 		// TODO
 	}
 
-	void D3D12::Render()
+	void D3D12Renderer::Render()
 	{
 		PopulateCommandList();
 
@@ -172,13 +172,13 @@ namespace Engine
 		WaitForPreviousFrame();
 	}
 
-	void D3D12::Destroy()
+	void D3D12Renderer::Destroy()
 	{
 		WaitForPreviousFrame();
 		CloseHandle(m_FenceEvent);
 	}
 
-	void D3D12::PopulateCommandList()
+	void D3D12Renderer::PopulateCommandList()
 	{
 		if (FAILED(m_CommandAllocator->Reset()))
 		{
@@ -190,14 +190,14 @@ namespace Engine
 			Logger::Print(LogType::Error, "Failed to reset Command List.", true);
 		}
 
-		m_CommandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_FrameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
+		m_CommandList->ResourceBarrier(1, &UD3D12_RESOURCE_BARRIER::Transition(m_renderTargets[m_FrameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
 
-		CD3DX12_CPU_DESCRIPTOR_HANDLE RenderTargetViewHandle(m_RenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart(), m_FrameIndex, m_renderTargetViewDescriptorSize);
+		UD3D12_CPU_DESCRIPTOR_HANDLE RenderTargetViewHandle(m_RenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart(), m_FrameIndex, m_renderTargetViewDescriptorSize);
 
 		float ClearColor[4] = { m_WindowDescriptor->ClearColour.Red, m_WindowDescriptor->ClearColour.Green, m_WindowDescriptor->ClearColour.Blue, m_WindowDescriptor->ClearColour.Alpha };
 		m_CommandList->ClearRenderTargetView(RenderTargetViewHandle, ClearColor, 0, nullptr);
 
-		m_CommandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_FrameIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
+		m_CommandList->ResourceBarrier(1, &UD3D12_RESOURCE_BARRIER::Transition(m_renderTargets[m_FrameIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
 
 		if (FAILED(m_CommandList->Close()))
 		{
@@ -205,13 +205,13 @@ namespace Engine
 		}
 	}
 
-	void D3D12::WaitForPreviousFrame()
+	void D3D12Renderer::WaitForPreviousFrame()
 	{
 		// TODO: Implement Frame Buffering
 		const unsigned __int64 Fence = m_FenceValue;
 		if (FAILED(m_CommandQueue->Signal(m_Fence.Get(), Fence)))
 		{
-			Logger::Print(LogType::Error, "Failed to signal to D3D12 Fence.", true);
+			Logger::Print(LogType::Error, "Failed to signal to D3D12Renderer Fence.", true);
 		}
 		m_FenceValue++;
 
@@ -227,7 +227,7 @@ namespace Engine
 		m_FrameIndex = m_SwapChain->GetCurrentBackBufferIndex();
 	}
 
-	void D3D12::GetHardwareAdapter(IDXGIFactory2* FactoryPointer, IDXGIAdapter1** AdapterPointer)
+	void D3D12Renderer::GetHardwareAdapter(IDXGIFactory2* FactoryPointer, IDXGIAdapter1** AdapterPointer)
 	{
 		ComPtr<IDXGIAdapter1> Adapter;
 		*AdapterPointer = nullptr;

@@ -6,8 +6,8 @@
 
 // Engine Core
 #include "Core/Application/Application.h"
-#include "Core/Application/Logger.h"
 #include "Core/Application/WindowData.h"
+#include "Core/Rendering/Renderers/Renderers.h"
 
 
 //

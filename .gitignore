@@ -1,3 +1,7 @@
+# Always Include Premake
+!premake5.exe
+
+# Text files
 Documents/*.txt
 
 # Generated Folders
@@ -21,10 +25,6 @@ Documents/*.txt
 *.dylib
 *.dll
 
-# Fortran Module Files
-*.mod
-*.smod
-
 # Compiled Static libraries
 *.lai
 *.la
@@ -35,9 +35,6 @@ Documents/*.txt
 *.exe
 *.out
 *.app
-
-# Always Include Premake
-!premake5.exe
 
 # Build Folders
 [Bb]inaries/

@@ -2,32 +2,33 @@
 //
 #pragma once
 #include "../../Engine.h"
-#include "Logger.h"
 #include "WindowData.h"
-#include "../Rendering/D3D12.h"
+#include "../Rendering/Renderers/Renderers.h"
 
 
 namespace Engine
 {
-	class PRAE_API Window
+	class PRAESEGMEN_API Window
 	{
 	public:
 		WindowDescriptor* m_WindowDescriptor;
 		
 		MSG m_Message;
 
-		D3D12* m_Renderer;
+		RendererType m_RendererType;
+		IRenderer* m_Renderer;
 
 	private:
 		HINSTANCE m_InstanceHandle;
 
 	public:
-		Window(WindowDescriptor* InWindowDescriptor);
+		Window(WindowDescriptor* InWindowDescriptor, RendererType InRendererType);
 		~Window();
 
 		bool Update();
 		void Render();
 		
 		static LRESULT CALLBACK MessageHandler(HWND WindowHandle, UINT Message, WPARAM WParam, LPARAM LParam);
+
 	};
 }

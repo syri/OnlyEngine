@@ -20,10 +20,10 @@ namespace Engine
 
 		void Clamp()
 		{
-			std::clamp(Red, 0, 255);
-			std::clamp(Green, 0, 255);
-			std::clamp(Blue, 0, 255);
-			std::clamp(Alpha, 0, 255);
+			Red = std::clamp(Red, 0, 255);
+			Green = std::clamp(Green, 0, 255);
+			Blue = std::clamp(Blue, 0, 255);
+			Alpha = std::clamp(Alpha, 0, 255);
 		}
 	};
 
@@ -42,10 +42,10 @@ namespace Engine
 
 		void Clamp()
 		{
-			std::clamp(Red, 0.f, 1.f);
-			std::clamp(Green, 0.f, 1.f);
-			std::clamp(Blue, 0.f, 1.f);
-			std::clamp(Alpha, 0.f, 1.f);
+			Red = std::clamp(Red, 0.f, 1.f);
+			Green = std::clamp(Green, 0.f, 1.f);
+			Blue = std::clamp(Blue, 0.f, 1.f);
+			Alpha = std::clamp(Alpha, 0.f, 1.f);
 		}
 	};
 }

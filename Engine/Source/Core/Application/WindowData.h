@@ -7,7 +7,7 @@
 
 namespace Engine
 {
-	struct PRAE_API WindowDescriptor
+	struct WindowDescriptor
 	{
 		std::wstring WindowTitle;
 
