@@ -2,6 +2,9 @@
 //
 #include "D3D12Renderer.h"
 
+#include <Application/WindowData.h>
+#include <Rendering/D3D12Util.h>
+
 
 namespace Engine
 {

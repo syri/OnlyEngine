@@ -1,13 +1,15 @@
 // Written by syri.
 //
 #pragma once
-#include "Engine.h"
-#include "WindowData.h"
-#include "Rendering/Renderers/Renderers.h"
+#include <Engine.h>
 
 
 namespace Engine
 {
+	enum class RendererType : unsigned int;
+	struct WindowDescriptor;
+	class IRenderer;
+
 	class PRAESEGMEN_API Window
 	{
 	public:

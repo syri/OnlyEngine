@@ -1,8 +1,8 @@
 // Written by syri.
 //
 #pragma once
-#include "Engine.h"
-#include "Math/Colour.h"
+#include <Engine.h>
+#include <Math/Colour.h>
 
 
 namespace Engine
