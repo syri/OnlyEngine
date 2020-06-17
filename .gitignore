@@ -1,54 +1,9 @@
-# Always Include Premake
-!premake5.exe
-
-# Text files
+# Document text files
 Documents/*.txt
 
 # Generated Folders
 .vs/
 
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
 # Build Folders
 [Bb]inaries/
 [Ii]ntermediates/
-
-# Project Files
-*.xcodeproj
-*.xcworkspace
-*.sln
-*.suo
-*.opensdf
-*.sdf
-*.VC.db
-*.VC.opendb
-*.vcxproj
-*.vcxproj.filters
-*.vcxproj.user
