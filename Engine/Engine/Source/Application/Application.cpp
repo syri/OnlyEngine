@@ -1,9 +1,8 @@
 // Written by syri.
 //
 #include "Application.h"
-#include <cstdlib>
-#include <string>
-#include <iostream>
+
+#include <Application/Window.h>
 
 
 namespace Engine

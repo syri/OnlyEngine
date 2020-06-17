@@ -5,7 +5,7 @@
 
 namespace Game
 {
-	Engine::WindowDescriptor GameWindowDescriptor = Engine::WindowDescriptor(L"Game", 800, 600, false);
+	Engine::WindowDescriptor GameWindowDescriptor = Engine::WindowDescriptor(TEXT("Game"), 800, 600, false);
 
 	class Application : public Engine::Application
 	{

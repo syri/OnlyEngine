@@ -1,14 +1,17 @@
 // Written by syri.
 //
 #pragma once
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <Windows.h>
+
+#include <algorithm>
+#include <cstdlib>
 #include <iostream>
 #include <shellapi.h>
-#include <string.h>
+#include <string>
 #include <vector>
-#ifndef WIN32_LEAN_AND_MEAN
-	#define WIN32_LEAN_AND_MEAN
-#endif
 #include <wrl/client.h>
 
 #include <d3d12.h>
@@ -21,5 +24,5 @@
 #include <mono/metadata/debug-helpers.h>
 
 // Internal
-#include "API.h"
-#include "Profiling/Logger.h"
+#include <API.h>
+#include <Profiling/Logger.h>

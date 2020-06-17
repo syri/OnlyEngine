@@ -1,12 +1,13 @@
 // Written by syri.
 //
 #pragma once
-#include "Engine.h"
-#include "Application/WindowData.h"
+#include <Engine.h>
 
 
 namespace Engine
 {
+	struct WindowDescriptor;
+
 	enum class RendererType : unsigned int
 	{
 		D3D12 = 1,

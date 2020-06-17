@@ -1,10 +1,8 @@
 // Written by syri.
 //
 #pragma once
-#include "Engine.h"
-#include "Application/WindowData.h"
-#include "Rendering/D3D12Util.h"
-#include "Rendering/IRenderer.h"
+#include <Engine.h>
+#include <Rendering/IRenderer.h>
 
 
 namespace Engine

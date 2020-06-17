@@ -2,6 +2,9 @@
 //
 #include "Window.h"
 
+#include <Application/WindowData.h>
+#include <Rendering/Renderers/Renderers.h>
+
 
 namespace Engine
 {
