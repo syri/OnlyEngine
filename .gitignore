@@ -1,8 +1,10 @@
-# Document text files
-Documents/*.txt
+# Praesegmen gitignore
 
 # Generated Folders
 .vs/
+
+# Document text files
+[Dd]ocuments/*.txt
 
 # Build Folders
 [Bb]inaries/
