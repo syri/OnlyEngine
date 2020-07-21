@@ -9,3 +9,7 @@
 # Build Folders
 [Bb]inaries/
 [Ii]ntermediates/
+
+# Always Include the Project Builder
+![Bb]inaries/Win64/Tools/ProjectBuilder.exe
+![Bb]inaries/Win32/Tools/ProjectBuilder.exe

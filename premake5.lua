@@ -1,20 +1,18 @@
 -- Written by syri.
 --
-workspace "Praesegmen"
+workspace "Uma"
     architecture "x64"
     startproject "Game"
 
-    configurations { "Development", "Release", "Shipping" }
+    configurations { "Debug", "Development", "Shipping" }
     flags { "MultiProcessorCompile" }
 
 group "Engine"
-    include "Engine/Engine"
-    include "Engine/EngineScript"
+    include "Engine"
 group ""
 
-group "Project"
-    include "Game/Game"
-    include "Game/GameScript"
+group "Projects"
+    include "Game"
 group ""
 
 group "Tools"
