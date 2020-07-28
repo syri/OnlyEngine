@@ -1,5 +1,6 @@
 // Written by syri.
 //
+#include <EnginePCH.h>
 #include "D3D12Renderer.h"
 
 #include <Application/WindowData.h>
@@ -81,13 +82,13 @@ namespace Engine
 		SwapChainDescriptor.SampleDesc.Count = 1;
 		
 		Microsoft::WRL::ComPtr<IDXGISwapChain1> SwapChain;
-		if (FAILED(Factory->CreateSwapChainForHwnd(m_CommandQueue.Get(), Descriptor.Handle, &SwapChainDescriptor, nullptr, nullptr, &SwapChain)))
+		if (FAILED(Factory->CreateSwapChainForHwnd(m_CommandQueue.Get(), WindowDescriptor.Handle, &SwapChainDescriptor, nullptr, nullptr, &SwapChain)))
 		{
 			CLogger::Print(ELogType::Error, TEXT("Failed to create Swap Chain."));
 		}
 
 		// TODO: Fullscreen implementation
-		if (FAILED(Factory->MakeWindowAssociation(Descriptor.Handle, DXGI_MWA_NO_ALT_ENTER)))
+		if (FAILED(Factory->MakeWindowAssociation(WindowDescriptor.Handle, DXGI_MWA_NO_ALT_ENTER)))
 		{
 			CLogger::Print(ELogType::Error, TEXT("Failed to create Window Association."));
 		}
@@ -108,7 +109,7 @@ namespace Engine
 		}
 		m_renderTargetViewDescriptorSize = m_Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-		D3D12U_CPU_DESCRIPTOR_HANDLE RenderTargetViewHandle(m_RenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart());
+		SD3D12U_CPU_DESCRIPTOR_HANDLE RenderTargetViewHandle(m_RenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart());
 		for (unsigned int BufferIndex = 0; BufferIndex < s_FrameCount; BufferIndex++)
 		{
 			if (FAILED(m_SwapChain->GetBuffer(BufferIndex, IID_PPV_ARGS(&m_renderTargets[BufferIndex]))))
@@ -156,7 +157,7 @@ namespace Engine
 
 	void CD3D12Renderer::Update()
 	{
-		//m_WindowDescriptor.ClearColour = FloatColour(((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), 1.0f);
+		//WindowDescriptor.ClearColour = SColour(((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), ((float)rand() / (RAND_MAX)), 1.0f);
 	}
 
 	void CD3D12Renderer::Render()
@@ -192,14 +193,14 @@ namespace Engine
 			CLogger::Print(ELogType::Error, TEXT("Failed to reset Command List."));
 		}
 
-		m_CommandList->ResourceBarrier(1, &D3D12U_RESOURCE_BARRIER::Transition(m_renderTargets[m_FrameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
+		m_CommandList->ResourceBarrier(1, &SD3D12U_RESOURCE_BARRIER::Transition(m_renderTargets[m_FrameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
 
-		D3D12U_CPU_DESCRIPTOR_HANDLE RenderTargetViewHandle(m_RenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart(), m_FrameIndex, m_renderTargetViewDescriptorSize);
+		SD3D12U_CPU_DESCRIPTOR_HANDLE RenderTargetViewHandle(m_RenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart(), m_FrameIndex, m_renderTargetViewDescriptorSize);
 
-		float ClearColor[4] = { Descriptor.ClearColour.Red, Descriptor.ClearColour.Green, Descriptor.ClearColour.Blue, Descriptor.ClearColour.Alpha };
+		float ClearColor[4] = { WindowDescriptor.ClearColour.Red, WindowDescriptor.ClearColour.Green, WindowDescriptor.ClearColour.Blue, WindowDescriptor.ClearColour.Alpha };
 		m_CommandList->ClearRenderTargetView(RenderTargetViewHandle, ClearColor, 0, nullptr);
 
-		m_CommandList->ResourceBarrier(1, &D3D12U_RESOURCE_BARRIER::Transition(m_renderTargets[m_FrameIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
+		m_CommandList->ResourceBarrier(1, &SD3D12U_RESOURCE_BARRIER::Transition(m_renderTargets[m_FrameIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
 
 		if (FAILED(m_CommandList->Close()))
 		{
@@ -242,7 +243,7 @@ namespace Engine
 			// Don't use Software rendering adapter.
 			if (AdapterDescription.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) continue;
 
-			if (SUCCEEDED(D3D12CreateDevice(Adapter.Get(), D3D_FEATURE_LEVEL_11_0, _uuidof(ID3D12Device), nullptr))) break;
+			if (SUCCEEDED(D3D12CreateDevice(Adapter.Get(), D3D_FEATURE_LEVEL_11_0, __uuidof(ID3D12Device), nullptr))) break;
 		}
 
 		*AdapterPointer = Adapter.Detach();

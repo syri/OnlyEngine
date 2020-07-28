@@ -6,6 +6,9 @@ project "Engine"
     language "C++"
     kind "SharedLib"
 
+    pchheader "EnginePCH.h"
+    pchsource "Source/EnginePCH.cpp"
+
     files {
         "Source/**.h",
         "Source/**.cpp"

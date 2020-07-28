@@ -1,13 +1,11 @@
 // Written by syri.
 //
 #pragma once
-#include <Engine.h>
+#include <API.h>
 
 
 namespace Engine
 {
-	struct SWindowDescriptor;
-
 	enum class UMA_API ERendererType : unsigned int
 	{
 		D3D12 = 1,
@@ -17,10 +15,10 @@ namespace Engine
 	class UMA_API IRenderer
 	{
 	public:
-		SWindowDescriptor& Descriptor;
+		SWindowDescriptor& WindowDescriptor;
 
 	public:
-		IRenderer(SWindowDescriptor& InDescriptor);
+		IRenderer(SWindowDescriptor& InWindowDescriptor);
 		virtual ~IRenderer() {}
 
 		virtual void Initialise() = 0;

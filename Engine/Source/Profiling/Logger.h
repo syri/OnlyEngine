@@ -1,7 +1,7 @@
 // Written by syri.
 //
 #pragma once
-#include <Engine.h>
+#include <API.h>
 
 
 namespace Engine
@@ -19,23 +19,23 @@ namespace Engine
 	class UMA_API CLogger
 	{
 	public:
-		static bool s_Initialised;
+		inline static bool s_bInitialised = false;
 
 	public:
 		static void Setup();
 		static void Clear();
 
 		template <typename... Arguments>
-		static void Print(const ELogType InLogType, const wchar_t* InMessage, const bool InForceEndline = true, Arguments&&... InArguments)
+		static void Print(const ELogType InLogType, const wchar_t* InMessage, const bool bInForceEndline = true, Arguments&&... InArguments)
 		{
-			if (!s_Initialised) Setup();
+			if (!s_bInitialised) Setup();
 
 			PrintLogType(InLogType);
 
 			// Output message.
 			std::wcout << InMessage;
 
-			if (InForceEndline) std::wcout << std::endl;
+			if (bInForceEndline) std::wcout << std::endl;
 		}
 
 		static void PrintLogType(const ELogType InLogType)

@@ -6,6 +6,9 @@ project "Game"
     language "C++"
     kind "ConsoleApp"
 
+    pchheader "GamePCH.h"
+    pchsource "Source/GamePCH.cpp"
+
     files {
         "Source/**.h",
         "Source/**.cpp"

@@ -20,5 +20,4 @@
 #include <DirectXMath.h>
 
 // Internal
-#include <API.h>
 #include <Profiling/Logger.h>

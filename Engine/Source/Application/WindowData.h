@@ -1,7 +1,7 @@
 // Written by syri.
 //
 #pragma once
-#include <Engine.h>
+#include <API.h>
 #include <Math/Colour.h>
 
 
@@ -16,7 +16,7 @@ namespace Engine
 
 	struct UMA_API SWindowDescriptor
 	{
-		const wchar_t* Title;
+		const wchar_t *Title;
 
 		int X;
 		int Y;

@@ -1,5 +1,6 @@
 // Written by syri.
 //
+#include <EnginePCH.h>
 #include "Application.h"
 
 #include <Application/Window.h>
@@ -35,18 +36,18 @@ namespace Engine
 
 	void CApplication::CreateNewWindow(SWindowDescriptor& InWindowDescriptor, const ERendererType InRendererType)
 	{
-		bool FoundExistingWindow = true;
+		bool bFoundExistingWindow = true;
 		int ID;		
 
 		if (Windows.size() > 0)
 		{
-			while (FoundExistingWindow)
+			while (bFoundExistingWindow)
 			{
 				ID = rand() % 1000;
 
 				for (CWindow* WindowReference : Windows)
 				{
-					FoundExistingWindow = WindowReference->ID == ID;
+					bFoundExistingWindow = WindowReference->ID == ID;
 				}
 			}
 		}

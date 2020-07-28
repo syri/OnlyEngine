@@ -1,5 +1,6 @@
 // Written by syri.
 //
+#include <GamePCH.h>
 #include <Game.h>
 
 
@@ -16,8 +17,8 @@ namespace Game
 			Engine::CLogger::Print(Engine::ELogType::Info, TEXT("Engine Version:"));
 			Engine::CLogger::Print(Engine::ELogType::Info, TEXT("Project Version:"));
 
-			CreateNewWindow(GameWindowDescriptor, Engine::ERendererType::D3D12);
 			GameWindowDescriptor.ClearColour = Engine::SColour(0.6f, 0.6f, 0.6f, 1.f);
+			CreateNewWindow(GameWindowDescriptor, Engine::ERendererType::D3D12);
 		}
 
 		~CApplication()

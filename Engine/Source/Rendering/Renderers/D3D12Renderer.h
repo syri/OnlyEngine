@@ -1,7 +1,7 @@
 // Written by syri.
 //
 #pragma once
-#include <Engine.h>
+#include <API.h>
 #include <Rendering/IRenderer.h>
 
 
@@ -29,7 +29,7 @@ namespace Engine
 		Microsoft::WRL::ComPtr<ID3D12Fence> m_Fence;
 
 	public:
-		UMA_API CD3D12Renderer(SWindowDescriptor& InDescriptor);
+		UMA_API CD3D12Renderer(SWindowDescriptor& InWindowDescriptor);
 
 		UMA_API void Initialise();
 		UMA_API void Update();

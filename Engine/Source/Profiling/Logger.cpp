@@ -1,12 +1,11 @@
 // Written by syri.
 //
+#include <EnginePCH.h>
 #include "Logger.h"
 
 
 namespace Engine
 {
-	bool CLogger::s_Initialised = false;
-
 	void CLogger::Setup()
 	{
 		// Setup VT100 / ANSI compatibility.
