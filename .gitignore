@@ -1,7 +1,8 @@
-# Praesegmen gitignore
+# Uma gitignore
 
 # Generated Folders
 .vs/
+.vscode/
 
 # Document text files
 [Dd]ocuments/*.txt
