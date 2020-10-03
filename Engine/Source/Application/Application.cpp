@@ -37,7 +37,7 @@ namespace Engine
 	void CApplication::CreateNewWindow(SWindowDescriptor& InWindowDescriptor, const ERendererType InRendererType)
 	{
 		bool bFoundExistingWindow = true;
-		int ID;		
+		uint32_t ID;		
 
 		if (Windows.size() > 0)
 		{

@@ -17,26 +17,26 @@ namespace Engine
 
 		SD3D12U_CPU_DESCRIPTOR_HANDLE(SD3D12U_DEFAULT) { ptr = 0; }
 
-		SD3D12U_CPU_DESCRIPTOR_HANDLE(const D3D12_CPU_DESCRIPTOR_HANDLE& Other, int OffsetScaledByIncrementSize)
+		SD3D12U_CPU_DESCRIPTOR_HANDLE(const D3D12_CPU_DESCRIPTOR_HANDLE& Other, int32_t OffsetScaledByIncrementSize)
 		{
 			InitOffsetted(Other, OffsetScaledByIncrementSize);
 		}
 
-		SD3D12U_CPU_DESCRIPTOR_HANDLE(const D3D12_CPU_DESCRIPTOR_HANDLE& Other, int OffsetInDescriptors, unsigned int DescriptorIncrementSize)
+		SD3D12U_CPU_DESCRIPTOR_HANDLE(const D3D12_CPU_DESCRIPTOR_HANDLE& Other, int32_t OffsetInDescriptors, uint32_t DescriptorIncrementSize)
 		{
 			InitOffsetted(Other, OffsetInDescriptors, DescriptorIncrementSize);
 		}
 
-		SD3D12U_CPU_DESCRIPTOR_HANDLE& Offset(int OffsetInDescriptors, unsigned int DescriptorIncrementSize)
+		SD3D12U_CPU_DESCRIPTOR_HANDLE& Offset(int32_t OffsetInDescriptors, uint32_t DescriptorIncrementSize)
 		{
-			ptr = unsigned __int64(__int64(ptr) + __int64(OffsetInDescriptors) * __int64(DescriptorIncrementSize));
+			ptr = uint64_t(int64_t(ptr) + int64_t(OffsetInDescriptors) * int64_t(DescriptorIncrementSize));
 
 			return *this;
 		}
 
-		SD3D12U_CPU_DESCRIPTOR_HANDLE& Offset(int OffsetScaledByIncrementSize)
+		SD3D12U_CPU_DESCRIPTOR_HANDLE& Offset(int32_t OffsetScaledByIncrementSize)
 		{
-			ptr = unsigned __int64(__int64(ptr) + __int64(OffsetScaledByIncrementSize));
+			ptr = uint64_t(int64_t(ptr) + int64_t(OffsetScaledByIncrementSize));
 
 			return *this;
 		}
@@ -52,22 +52,22 @@ namespace Engine
 			return *this;
 		}
 
-		inline void InitOffsetted(const D3D12_CPU_DESCRIPTOR_HANDLE& Base, int OffsetScaledByIncrementSize) { InitOffsetted(*this, Base, OffsetScaledByIncrementSize); }
+		inline void InitOffsetted(const D3D12_CPU_DESCRIPTOR_HANDLE& Base, int32_t OffsetScaledByIncrementSize) { InitOffsetted(*this, Base, OffsetScaledByIncrementSize); }
 
-		inline void InitOffsetted(const D3D12_CPU_DESCRIPTOR_HANDLE& Base, int OffsetInDescriptors, unsigned int DescriptorIncrementSize)
+		inline void InitOffsetted(const D3D12_CPU_DESCRIPTOR_HANDLE& Base, int32_t OffsetInDescriptors, uint32_t DescriptorIncrementSize)
 		{
 			InitOffsetted(*this, Base, OffsetInDescriptors, DescriptorIncrementSize);
 		}
 
-		static inline void InitOffsetted(D3D12_CPU_DESCRIPTOR_HANDLE& Handle, const D3D12_CPU_DESCRIPTOR_HANDLE& Base, int OffsetScaledByIncrementSize)
+		static inline void InitOffsetted(D3D12_CPU_DESCRIPTOR_HANDLE& Handle, const D3D12_CPU_DESCRIPTOR_HANDLE& Base, int32_t OffsetScaledByIncrementSize)
 		{
-			Handle.ptr = unsigned __int64(__int64(Base.ptr) + __int64(OffsetScaledByIncrementSize));
+			Handle.ptr = uint64_t(int64_t(Base.ptr) + int64_t(OffsetScaledByIncrementSize));
 		}
 
 		static inline void InitOffsetted(D3D12_CPU_DESCRIPTOR_HANDLE& Handle, const D3D12_CPU_DESCRIPTOR_HANDLE& Base
-			, int OffsetInDescriptors, unsigned int DescriptorIncrementSize)
+			, int32_t OffsetInDescriptors, uint32_t DescriptorIncrementSize)
 		{
-			Handle.ptr = unsigned __int64(__int64(Base.ptr) + __int64(OffsetInDescriptors) * __int64(DescriptorIncrementSize));
+			Handle.ptr = uint64_t(int64_t(Base.ptr) + int64_t(OffsetInDescriptors) * int64_t(DescriptorIncrementSize));
 		}
 
 	};
@@ -81,7 +81,7 @@ namespace Engine
 		{}
 
 		static inline SD3D12U_RESOURCE_BARRIER Transition(ID3D12Resource* Resource, D3D12_RESOURCE_STATES StateBefore
-			, D3D12_RESOURCE_STATES StateAfter, unsigned int Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES
+			, D3D12_RESOURCE_STATES StateAfter, uint32_t Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES
 			, D3D12_RESOURCE_BARRIER_FLAGS Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE)
 		{
 			SD3D12U_RESOURCE_BARRIER Result = {};

@@ -7,10 +7,14 @@
 #include <Windows.h>
 
 #include <algorithm>
+#include <any>
+#include <cstdint>
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <shellapi.h>
 #include <string>
+#include <variant>
 #include <vector>
 #include <wrl/client.h>
 

@@ -12,7 +12,7 @@ namespace Engine
 	class UMA_API CWindow
 	{
 	public:
-		const int ID;
+		const uint32_t ID;
 
 		SWindowDescriptor& WindowDescriptor;
 		
@@ -25,7 +25,7 @@ namespace Engine
 		HINSTANCE m_InstanceHandle;
 
 	public:
-		CWindow(int InID, SWindowDescriptor& InWindowDescriptor, const ERendererType InRHIRendererType);
+		CWindow(uint32_t InID, SWindowDescriptor& InWindowDescriptor, const ERendererType InRHIRendererType);
 		~CWindow();
 
 		bool Update();

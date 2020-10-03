@@ -10,12 +10,12 @@ namespace Engine
 	class CD3D12Renderer : public IRenderer
 	{
 	private:
-		static const unsigned int s_FrameCount = 2;
+		static const uint32_t s_FrameCount = 2;
 
-		unsigned int m_renderTargetViewDescriptorSize;
-		unsigned int m_FrameIndex;
+		uint32_t m_renderTargetViewDescriptorSize;
+		uint32_t m_FrameIndex;
 		HANDLE m_FenceEvent;
-		unsigned __int64 m_FenceValue;
+		uint64_t m_FenceValue;
 		bool m_bUseWarpDevice;
 
 		Microsoft::WRL::ComPtr<IDXGISwapChain3> m_SwapChain;

@@ -22,7 +22,7 @@ namespace Engine
 
 	void CD3D12Renderer::LoadPipeline()
 	{
-		unsigned int DXGIFactoryFlags = 0;
+		uint32_t DXGIFactoryFlags = 0;
 
 #ifdef _DEBUG
 		Microsoft::WRL::ComPtr<ID3D12Debug> DebugController;
@@ -36,7 +36,7 @@ namespace Engine
 		Microsoft::WRL::ComPtr<IDXGIFactory4> Factory;
 		if (FAILED(CreateDXGIFactory2(DXGIFactoryFlags, IID_PPV_ARGS(&Factory))))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to create DXGI Factory."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to create DXGI Factory."));
 		}
 
 		if (m_bUseWarpDevice)
@@ -44,12 +44,12 @@ namespace Engine
 			Microsoft::WRL::ComPtr<IDXGIAdapter> WarpAdapter;
 			if (FAILED(Factory->EnumWarpAdapter(IID_PPV_ARGS(&WarpAdapter))))
 			{
-				CLogger::Print(ELogType::Error, TEXT("Failed to enumerate the Warp Adapter."));
+				CLogger::PrintLine(ELogType::Error, TEXT("Failed to enumerate the Warp Adapter."));
 			}
 
 			if (FAILED(D3D12CreateDevice(WarpAdapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&m_Device))))
 			{
-				CLogger::Print(ELogType::Error, TEXT("Failed to create the D3D12 Device."));
+				CLogger::PrintLine(ELogType::Error, TEXT("Failed to create the D3D12 Device."));
 			}
 		}
 		else
@@ -59,7 +59,7 @@ namespace Engine
 
 			if (FAILED(D3D12CreateDevice(HardwareAdapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&m_Device))))
 			{
-				CLogger::Print(ELogType::Error, TEXT("Failed to create the D3D12 Device."));
+				CLogger::PrintLine(ELogType::Error, TEXT("Failed to create the D3D12 Device."));
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace Engine
 
 		if (FAILED(m_Device->CreateCommandQueue(&QueueDescriptor, IID_PPV_ARGS(&m_CommandQueue))))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to create Command Queue."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to create Command Queue."));
 		}
 
 		DXGI_SWAP_CHAIN_DESC1 SwapChainDescriptor = {};
@@ -84,18 +84,18 @@ namespace Engine
 		Microsoft::WRL::ComPtr<IDXGISwapChain1> SwapChain;
 		if (FAILED(Factory->CreateSwapChainForHwnd(m_CommandQueue.Get(), WindowDescriptor.Handle, &SwapChainDescriptor, nullptr, nullptr, &SwapChain)))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to create Swap Chain."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to create Swap Chain."));
 		}
 
 		// TODO: Fullscreen implementation
 		if (FAILED(Factory->MakeWindowAssociation(WindowDescriptor.Handle, DXGI_MWA_NO_ALT_ENTER)))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to create Window Association."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to create Window Association."));
 		}
 
 		if (FAILED(SwapChain.As(&m_SwapChain)))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to assign Swap Chain."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to assign Swap Chain."));
 		}
 		m_FrameIndex = m_SwapChain->GetCurrentBackBufferIndex();
 
@@ -105,16 +105,16 @@ namespace Engine
 		RenderTargetViewDescriptor.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 		if (FAILED(m_Device->CreateDescriptorHeap(&RenderTargetViewDescriptor, IID_PPV_ARGS(&m_RenderTargetViewHeap))))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to create Render Target View Descriptor Heap."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to create Render Target View Descriptor Heap."));
 		}
 		m_renderTargetViewDescriptorSize = m_Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 		SD3D12U_CPU_DESCRIPTOR_HANDLE RenderTargetViewHandle(m_RenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart());
-		for (unsigned int BufferIndex = 0; BufferIndex < s_FrameCount; BufferIndex++)
+		for (uint32_t BufferIndex = 0; BufferIndex < s_FrameCount; BufferIndex++)
 		{
 			if (FAILED(m_SwapChain->GetBuffer(BufferIndex, IID_PPV_ARGS(&m_renderTargets[BufferIndex]))))
 			{
-				CLogger::Print(ELogType::Error, TEXT("Failed to get Swap Chain Buffer"));
+				CLogger::PrintLine(ELogType::Error, TEXT("Failed to get Swap Chain Buffer"));
 			}
 
 			m_Device->CreateRenderTargetView(m_renderTargets[BufferIndex].Get(), nullptr, RenderTargetViewHandle);
@@ -123,7 +123,7 @@ namespace Engine
 
 		if (FAILED(m_Device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_CommandAllocator))))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to create Command Allocator."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to create Command Allocator."));
 		}
 	}
 
@@ -131,17 +131,17 @@ namespace Engine
 	{
 		if (FAILED(m_Device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_CommandAllocator.Get(), nullptr, IID_PPV_ARGS(&m_CommandList))))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to create Command List."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to create Command List."));
 		}
 
 		if (FAILED(m_CommandList->Close()))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to close Command List"));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to close Command List"));
 		}
 
 		if (FAILED(m_Device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&m_Fence))))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to create Fence."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to create Fence."));
 		}
 		m_FenceValue = 1;
 
@@ -150,7 +150,7 @@ namespace Engine
 		{
 			if (FAILED(HRESULT_FROM_WIN32(GetLastError())))
 			{
-				CLogger::Print(ELogType::Error, TEXT("Error was thrown by the D3D12Renderer Fence."));
+				CLogger::PrintLine(ELogType::Error, TEXT("Error was thrown by the D3D12Renderer Fence."));
 			}
 		}
 	}
@@ -169,7 +169,7 @@ namespace Engine
 
 		if (FAILED(m_SwapChain->Present(1, 0)))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to present frame."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to present frame."));
 		}
 
 		WaitForPreviousFrame();
@@ -185,12 +185,12 @@ namespace Engine
 	{
 		if (FAILED(m_CommandAllocator->Reset()))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to reset Command Allocator."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to reset Command Allocator."));
 		}
 
 		if (FAILED(m_CommandList->Reset(m_CommandAllocator.Get(), m_PipelineState.Get())))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to reset Command List."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to reset Command List."));
 		}
 
 		m_CommandList->ResourceBarrier(1, &SD3D12U_RESOURCE_BARRIER::Transition(m_renderTargets[m_FrameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
@@ -204,7 +204,7 @@ namespace Engine
 
 		if (FAILED(m_CommandList->Close()))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to close Command List."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to close Command List."));
 		}
 	}
 
@@ -214,7 +214,7 @@ namespace Engine
 		const unsigned __int64 Fence = m_FenceValue;
 		if (FAILED(m_CommandQueue->Signal(m_Fence.Get(), Fence)))
 		{
-			CLogger::Print(ELogType::Error, TEXT("Failed to signal to D3D12Renderer Fence."));
+			CLogger::PrintLine(ELogType::Error, TEXT("Failed to signal to D3D12Renderer Fence."));
 		}
 		m_FenceValue++;
 
@@ -222,7 +222,7 @@ namespace Engine
 		{
 			if (FAILED(m_Fence->SetEventOnCompletion(Fence, m_FenceEvent)))
 			{
-				CLogger::Print(ELogType::Error, TEXT("Failed while waiting on Fence."));
+				CLogger::PrintLine(ELogType::Error, TEXT("Failed while waiting on Fence."));
 			}
 			WaitForSingleObject(m_FenceEvent, INFINITE);
 		}
@@ -235,7 +235,7 @@ namespace Engine
 		Microsoft::WRL::ComPtr<IDXGIAdapter1> Adapter;
 		*AdapterPointer = nullptr;
 
-		for (unsigned int AdapterIndex = 0; DXGI_ERROR_NOT_FOUND != FactoryPointer->EnumAdapters1(AdapterIndex, &Adapter); ++AdapterIndex)
+		for (uint32_t AdapterIndex = 0; DXGI_ERROR_NOT_FOUND != FactoryPointer->EnumAdapters1(AdapterIndex, &Adapter); ++AdapterIndex)
 		{
 			DXGI_ADAPTER_DESC1 AdapterDescription;
 			Adapter->GetDesc1(&AdapterDescription);

@@ -8,7 +8,7 @@
 
 namespace Engine
 {
-	CWindow::CWindow(int InID, SWindowDescriptor& InWindowDescriptor, const ERendererType InRHIRendererType)
+	CWindow::CWindow(uint32_t InID, SWindowDescriptor& InWindowDescriptor, const ERendererType InRHIRendererType)
 		: ID(InID), WindowDescriptor(InWindowDescriptor), RHIRendererType(InRHIRendererType)
 	{
 		WNDCLASSEX WindowClass;

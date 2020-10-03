@@ -6,7 +6,7 @@
 
 namespace Engine
 {
-	enum class UMA_API EColourType : unsigned int
+	enum class UMA_API EColourType : uint32_t
 	{
 		R8G8B8A8 = 1
 	};
@@ -24,7 +24,7 @@ namespace Engine
 			Clamp();
 		}
 
-		SColour(EColourType InColourType, int InRed, const int InGreen, const int InBlue, const int InAlpha)
+		SColour(EColourType InColourType, uint32_t InRed, const uint32_t InGreen, const uint32_t InBlue, const uint32_t InAlpha)
 		{
 			switch (InColourType)
 			{

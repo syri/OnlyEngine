@@ -17,10 +17,10 @@
 // Forward declarations.
 namespace Engine
 {
-	enum class EColourType : unsigned int;
-	enum class ELogType : unsigned int;
-	enum class ERendererType : unsigned int;
-	enum class EWindowMode : unsigned int;
+	enum class EColourType : uint32_t;
+	enum class ELogType : uint32_t;
+	enum class ERendererType : uint32_t;
+	enum class EWindowMode : uint32_t;
 
 	struct SColour;
 	struct SRotator;

@@ -22,13 +22,13 @@ namespace Engine
 
         UMA_API void CreateNewWindow(SWindowDescriptor& InWindowDescriptor, const ERendererType InRendererType);
 
-        UMA_API int GetEngineVersionYear() const { return 2020; }
-        UMA_API int GetEngineVersionMajor() const { return 0; }
-        UMA_API int GetEngineVersionMinor() const { return 7; }
+        UMA_API uint32_t GetEngineVersionYear() const { return 2020; }
+        UMA_API uint32_t GetEngineVersionMajor() const { return 0; }
+        UMA_API uint32_t GetEngineVersionMinor() const { return 7; }
 
-		UMA_API int GetProjectVersionYear() const { return 2020; }
-		UMA_API int GetProjectVersionMajor() const { return 0; }
-		UMA_API int GetProjectVersionMinor() const { return 5; }
+		UMA_API uint32_t GetProjectVersionYear() const { return 2020; }
+		UMA_API uint32_t GetProjectVersionMajor() const { return 0; }
+		UMA_API uint32_t GetProjectVersionMinor() const { return 5; }
 
     };
 
