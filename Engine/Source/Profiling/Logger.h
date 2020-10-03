@@ -35,6 +35,18 @@ namespace Engine
 			std::wcout << InMessage;
 		}
 
+		static void Print(const wchar_t* InLogProfile, const ELogType InLogType, const wchar_t* InMessage)
+		{
+			if (!s_bInitialised) Setup();
+
+			PrintLogType(InLogType);
+
+			std::wcout << TEXT("[") << InLogProfile << TEXT("] ");
+
+			// Output message.
+			std::wcout << InMessage;
+		}
+
 		template<typename... ArgumentTypes>
 		static void Print(const ELogType InLogType, const wchar_t* InMessage, const std::vector<std::variant<ArgumentTypes...>>& InArguments)
 		{
@@ -68,9 +80,49 @@ namespace Engine
 			Print(InLogType, Message.c_str());
 		}
 
+		template<typename... ArgumentTypes>
+		static void Print(const wchar_t* InLogProfile, const ELogType InLogType, const wchar_t* InMessage, const std::vector<std::variant<ArgumentTypes...>>& InArguments)
+		{
+			std::wstring Message = InMessage;
+
+			if (InArguments.size() > 0)
+			{
+				int32_t Index = 0;
+
+				for (const auto& Argument : InArguments)
+				{
+					wchar_t Buffer[8];
+					wsprintf(Buffer, TEXT("{%i}"), Index);
+
+					size_t Location = 0;
+					Location = Message.find(Buffer);
+
+					std::visit([&](const auto& Value)
+						{
+							if (Location != std::wstring::npos)
+							{
+								Message = Message.replace(Location, 3, std::to_wstring(Value));
+							}
+						}
+					, Argument);
+
+					Index++;
+				}
+			}
+
+			Print(InLogProfile, InLogType, Message.c_str());
+		}
+
 		static void PrintLine(const ELogType InLogType, const wchar_t* InMessage)
 		{
 			Print(InLogType, InMessage);
+
+			std::wcout << std::endl;
+		}
+
+		static void PrintLine(const wchar_t* InLogProfile, const ELogType InLogType, const wchar_t* InMessage)
+		{
+			Print(InLogProfile, InLogType, InMessage);
 
 			std::wcout << std::endl;
 		}
@@ -79,6 +131,14 @@ namespace Engine
 		static void PrintLine(const ELogType InLogType, const wchar_t* InMessage, const std::vector<std::variant<ArgumentTypes...>>& InArguments)
 		{
 			Print(InLogType, InMessage, InArguments);
+
+			std::wcout << std::endl;
+		}
+
+		template<typename... ArgumentTypes>
+		static void PrintLine(const wchar_t* InLogProfile, const ELogType InLogType, const wchar_t* InMessage, const std::vector<std::variant<ArgumentTypes...>>& InArguments)
+		{
+			Print(InLogProfile, InLogType, InMessage, InArguments);
 
 			std::wcout << std::endl;
 		}

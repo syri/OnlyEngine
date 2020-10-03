@@ -14,9 +14,9 @@ namespace Game
 		CApplication()
 			: Engine::CApplication()
 		{
-			Engine::CLogger::PrintLine(Engine::ELogType::Info, TEXT("Engine Version: {0}.{1}.{2}"),
+			Engine::CLogger::PrintLine(LOG_Project, Engine::ELogType::Info, TEXT("Engine Version: {0}.{1}.{2}"),
 				std::vector<std::variant<int32_t>>{ GetEngineVersionYear(), GetEngineVersionMajor(), GetEngineVersionMinor() });
-			Engine::CLogger::PrintLine(Engine::ELogType::Info, TEXT("Project Version: {0}.{1}.{2}"),
+			Engine::CLogger::PrintLine(LOG_Project, Engine::ELogType::Info, TEXT("Project Version: {0}.{1}.{2}"),
 				std::vector<std::variant<int32_t>>{ GetProjectVersionYear(), GetProjectVersionMajor(), GetProjectVersionMinor() });
 
 			GameWindowDescriptor.ClearColour = Engine::SColour(0.6f, 0.6f, 0.6f, 1.f);

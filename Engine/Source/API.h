@@ -14,6 +14,11 @@
 #endif
 
 
+#define LOG_System TEXT("SYSTEM")
+#define LOG_Rendering TEXT("RENDERING")
+#define LOG_Project TEXT("PROJECT")
+
+
 // Forward declarations.
 namespace Engine
 {
